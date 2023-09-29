@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="zxx">
+
+
+<!-- Mirrored from spellthemes.com/demos/html-templates/ration/preview/gallery.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 10 May 2023 06:49:50 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Ration | Diet & Nutrition Html Template</title>
+    <!-- ==================Start Css Link===================== -->
+    <!-- font awesome css cdn -->
+    <link href="../../../../../stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lora:400,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,700" rel="stylesheet">
+    <link rel="stylesheet" href="assets/fonts/flaticon.css">
+    <link rel="shortcut icon" type="image/x-icon" href="assets/images/logo/fav.jpg">
+    <!-- plugins css link -->
+    <link rel="stylesheet" href="assets/css/plugins.css">
+    <!-- app css -->
+    <link rel="stylesheet" href="assets/css/app.css">
+    <!-- ==================End Css Link===================== -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+
+    <!--[if lt IE 9]>
+    <script src="http://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="http://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body class="page-single">
+
+
+<!--
+ preloader
+ -->
+
+<div class="preloader-wrapper">
+    <div class="preloader-thumb">
+        <img src="assets/images/all-img/preloder.gif" alt="">
+    </div>
+</div>
+
+
+<!--
+Header area start
+ -->
+
+<div class="site-header header-2">
+    
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="navbar-brand logo"><img src="assets/images/logo/flogo.png" alt=""></a>
+            <div class="ml-auto main-menu">
+                <ul>
+                    <li ><a href="#">home</a>
+                       
+                    </li>
+                    <li><a href="viewUsers.html">View Users</a>
+                        
+                    </li>
+                    
+                    
+                    <li class="current-menu-item"><a href="viewDietitians.html">View Dietitians</a>
+                        
+                    </li>
+                    <li ><a href="index.html">Logout</a>
+                        
+                    </li>
+                    
+                    
+                </ul>
+            </div> <!-- end main-menu -->
+            <div class="mobile-menu ml-auto">
+                <div class="menu-click">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+
+        </div>
+    </nav>
+</div>
+
+
+<!--
+page banner section
+ -->
+
+<section class="page-banner">
+    <div class="container">
+        <div class="row align-items-center justify-content-center page-bn-height">
+            <div class="col-12 text-center">
+                <h3>View Dietitians</h3>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb site-breadcumb-1 justify-content-center">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item"><a href="#">page</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">View Dietitians</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+
+
+<!-- plugin js scripts -->
+<script src="assets/js/plugins.js"></script>
+<!-- app js -->
+<script src="assets/js/app.js"></script>
+<script>
+   
+       var i=1; 
+        $.ajax({
+            url: 'http://localhost:4000/findDietitian',
+            headers:{
+                'Content-Type':'application/json'
+            },
+            type: 'GET',
+            contentType: 'application/json',
+            success: function(result){
+            result.forEach(function(obj)
+            {
+                
+                var div=document.createElement("DIV");
+                div.style.border="solid 2px";
+                div.style.marginTop="2px";
+                div.style.marginLeft="15%";
+                div.style.width="70%";
+                document.body.appendChild(div);
+                var name=document.createElement("H5");
+                name.innerHTML="First Name: "+obj.fname;
+                var desc=document.createElement("H5");
+                desc.innerHTML="Last Name: "+obj.lname;
+                var email=document.createElement("H5");
+                email.innerHTML=obj.email;
+                email.style.fontWeight="bold";
+                var loc=document.createElement("H5");
+                loc.innerHTML="Location: "+obj.location;
+                var br=document.createElement("BR");
+                
+                email.id="e"+i;
+                div.appendChild(email);
+                div.appendChild(br);
+                div.appendChild(name);
+                div.appendChild(br);
+                div.appendChild(desc);
+                div.appendChild(br);
+                div.appendChild(loc);
+                
+                var button=document.createElement("BUTTON");
+                button.innerHTML="Remove Dietitian";
+                button.class="btn btn-success";
+                button.style.marginBottom="2%";
+                button.style.marginLeft="35%";
+                button.id=i;
+                button.onclick=function(){
+                    deleteUser("e"+button.id);
+                };
+                div.appendChild(button);
+                i++;
+            });	
+        },
+            error: function(){
+            alert('error');
+        }
+        });
+        
+    
+        //var id=e.target.id;
+        
+        function deleteUser(uemail){
+           
+           var email=document.getElementById(uemail).innerHTML;
+           //alert(email);
+            var data={email:email};
+
+            var post=JSON.stringify(data);
+            $.ajax({
+               url:'http://localhost:4000/delDietitian',
+               headers: {
+                  'Content-Type':'application/json'
+                 },			
+                type: 'DELETE',
+                data: post,
+                contentType: 'application/json',
+            success: function (result) {
+                alert("User Removed");
+            }
+
+            });
+        }
+
+</script>
+
+
+</body>
+
+
+<!-- Mirrored from spellthemes.com/demos/html-templates/ration/preview/gallery.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 10 May 2023 06:50:44 GMT -->
+</html>
